@@ -1,5 +1,10 @@
 import { EnumValues } from "zod";
 
+export type optionsType = {
+  id: string;
+  label: string;
+};
+
 export const JOBTYPES: EnumValues = ["Full-Time", "Part-Time", "Remote", "Internship"];
 
 export const JOB_LISTING_COLUMNS: string[] = ["Roles", "Status", "Date Posted", "Due Date", "Job Type", "Applicants", "Needs"];
@@ -22,5 +27,24 @@ export const JOB_LISTING_DATA = [
     jobType: "Full-Time",
     applicants: 1,
     needs: 10,
+  },
+];
+
+export const LOCATION_OPTIONS: optionsType[] = [
+  {
+    id: "Indonesia",
+    label: "Indonesia",
+  },
+  {
+    id: "Malaysia",
+    label: "Malaysia",
+  },
+  {
+    id: "Singapura",
+    label: "Singapura",
+  },
+  {
+    id: "Thailand",
+    label: "Thailand",
   },
 ];
