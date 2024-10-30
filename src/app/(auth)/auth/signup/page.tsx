@@ -25,18 +25,33 @@ const SignUpPage: FC<SignUpPageProps> = ({}) => {
 
   const onSubmit = async (val: z.infer<typeof signUpFormSchema>) => {
     try {
+      if (val.password !== val.confirmPassword) {
+        toast({
+          title: "Error",
+          description: "Password and confirm password do not match",
+        });
+      }
+
       const response = await fetch("/api/company/new-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(val),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        await router.push("/auth/signin");
-      } else {
+        toast({
+          title: "Success",
+          description: "login success",
+        });
+        setTimeout(() => {
+          router.push("/auth/signin");
+        }, 2000);
+      } else if (response.status === 400) {
         toast({
           title: "Error",
-          description: "Email already exists",
+          description: data.error,
         });
       }
     } catch (error) {
@@ -88,6 +103,18 @@ const SignUpPage: FC<SignUpPageProps> = ({}) => {
                   <FormItem>
                     <FormControl>
                       <Input type="password" placeholder="Enter your password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input type="password" placeholder="Enter your confirm password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
