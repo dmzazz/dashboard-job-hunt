@@ -23,7 +23,9 @@
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
+    "@radix-ui/react-toast": "^1.2.2",
     "@supabase/supabase-js": "^2.46.0",
+    "bcryptjs": "^2.4.3",
     "ckeditor5": "^43.0.0",
     "ckeditor5-premium-features": "^43.0.0",
     "class-variance-authority": "^0.7.0",
@@ -42,6 +44,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
