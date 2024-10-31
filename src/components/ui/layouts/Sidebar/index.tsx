@@ -6,6 +6,7 @@ import { AiOutlineCalendar, AiOutlineHome, AiOutlineLogout, AiOutlineMessage, Ai
 import { BsBuildings, BsGear } from "react-icons/bs";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 interface SidebarProps {}
 
@@ -52,7 +53,7 @@ const Sidebar: FC<SidebarProps> = ({}) => {
             <BsGear className="mr-2 text-lg" />
             Settings
           </Button>
-          <Button variant={"ghost"} className="w-full justify-start rounded-none text-destructive hover:text-destructive hover:bg-red-200">
+          <Button variant={"ghost"} className="w-full justify-start rounded-none text-destructive hover:text-destructive hover:bg-red-200" onClick={() => signOut()}>
             <AiOutlineLogout className="mr-2 text-lg" />
             Log out
           </Button>
