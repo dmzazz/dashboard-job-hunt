@@ -1,22 +1,23 @@
-"use client"
+"use client";
 
 import React, { FC } from "react";
 import { Button } from "../../button";
 import { PlusIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface HeaderProps {}
 
 export const Header: FC<HeaderProps> = ({}) => {
+  const router = useRouter();
+  const { data: session } = useSession();
 
-  const router = useRouter()
-
-  const navCreateJobPAge = () => router.push("/post-a-job")
+  const navCreateJobPAge = () => router.push("/post-a-job");
   return (
     <div className="pb-3 mb-8 border-b border-border flex flex-row items-center justify-between">
       <div>
         <div>Company</div>
-        <div className="font-semibold">Twitter</div>
+        <div className="font-semibold">{session?.user.name}</div>
       </div>
       <div className="rounded-none py-3 px-6">
         <Button onClick={navCreateJobPAge}>
