@@ -35,9 +35,9 @@ const SignInPage: FC<SignInPageProps> = ({}) => {
         title: "Error",
         description: "Email or password maybe wrong",
       });
-      return
+      return;
     }
-    router.push("/dashboard");
+    router.push("/");
   };
 
   return (

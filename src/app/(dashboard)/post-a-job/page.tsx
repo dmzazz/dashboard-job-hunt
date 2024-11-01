@@ -18,9 +18,23 @@ import CKEditor from "@/components/organisms/CKEditor";
 import InputBenefits from "@/components/organisms/InputBenefits";
 import { Button } from "@/components/ui/button";
 
+import useSWR from "swr";
+import { fetcher } from "@/lib/utils";
+import { CategoryJob } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import moment from "moment";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
+
 interface PostJobPageProps {}
 
 const PostJobPage: FC<PostJobPageProps> = ({}) => {
+  const { data, error, isLoading } = useSWR<CategoryJob>("/api/job/categories", fetcher);
+
+  const { data: session } = useSession();
+
+  const { toast } = useToast();
+
   const [editorLoaded, setEditorLoaded] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof jobFormSchema>>({
@@ -30,8 +44,51 @@ const PostJobPage: FC<PostJobPageProps> = ({}) => {
     },
   });
 
-  const onSubmit = (val: z.infer<typeof jobFormSchema>) => {
-    console.log(val);
+  const router = useRouter();
+
+  const onSubmit = async (val: z.infer<typeof jobFormSchema>) => {
+    try {
+      const body: any = {
+        applicants: 0,
+        benefits: val.benefits,
+        categoryId: val.categoryId,
+        companyId: session?.user.id!!,
+        datePosted: moment().toDate(),
+        description: val.jobDescription,
+        dueDate: moment().add(1, "M").toDate(),
+        jobType: val.jobType,
+        needs: 20,
+        niceToHaves: val.niceToHaves,
+        requiredSkills: val.requiredSkills,
+        responsibility: val.responsibility,
+        roles: val.roles,
+        salaryFrom: val.salaryFrom,
+        salaryTo: val.salaryTo,
+        whoYouAre: val.whoYouAre,
+      };
+
+      await fetch("/api/job", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      toast({
+        title: "Success",
+        description: "Job posted successfully",
+      });
+
+      setTimeout(() => {
+        router.push("/job-listings");
+      }, 1500);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to post job",
+      });
+    }
   };
 
   useEffect(() => {
@@ -69,7 +126,7 @@ const PostJobPage: FC<PostJobPageProps> = ({}) => {
             />
           </FieldInput>
 
-          <FieldInput title="Type of Empliyment" subtitle="You can select multiple type of employment">
+          <FieldInput title="Type of Employment" subtitle="You can select multiple type of employment">
             <FormField
               control={form.control}
               name="jobType"
@@ -80,7 +137,7 @@ const PostJobPage: FC<PostJobPageProps> = ({}) => {
                       {JOBTYPES.map((item: string, i: number) => (
                         <FormItem key={item + i} className="flex items-center space-x-3 space-y-0">
                           <FormControl>
-                            <RadioGroupItem value="item " />
+                            <RadioGroupItem value={item} />
                           </FormControl>
                           <FormLabel className="font-normal">{item}</FormLabel>
                         </FormItem>
@@ -137,9 +194,11 @@ const PostJobPage: FC<PostJobPageProps> = ({}) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="m@example.com">m@example.com</SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">m@support.com</SelectItem>
+                      {data?.map((item: any) => (
+                        <SelectItem key={item.id} value={item.id}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -149,7 +208,7 @@ const PostJobPage: FC<PostJobPageProps> = ({}) => {
           </FieldInput>
 
           <FieldInput title="Required Skills" subtitle="Add required skills for the job">
-            <InputSkills form={form} name="requiredSkills" label="Add Skills"/>
+            <InputSkills form={form} name="requiredSkills" label="Add Skills" />
           </FieldInput>
 
           <FieldInput title="Job Descriptions" subtitle="Job titles must be describe one position">
@@ -173,7 +232,7 @@ const PostJobPage: FC<PostJobPageProps> = ({}) => {
           </FieldInput>
 
           <div className="flex justify-end">
-              <Button size="lg">Do a Review</Button>
+            <Button size="lg">Do a Review</Button>
           </div>
         </form>
       </Form>
