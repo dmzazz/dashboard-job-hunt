@@ -67,7 +67,7 @@ const PostJobPage: FC<PostJobPageProps> = ({}) => {
         whoYouAre: val.whoYouAre,
       };
 
-      await fetch("/api/job", {
+      const response = await fetch("/api/job", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,14 +75,16 @@ const PostJobPage: FC<PostJobPageProps> = ({}) => {
         body: JSON.stringify(body),
       });
 
-      toast({
-        title: "Success",
-        description: "Job posted successfully",
-      });
+      if (response.ok) {
+        toast({
+          title: "Success",
+          description: "Job posted successfully",
+        });
 
-      setTimeout(() => {
-        router.push("/job-listings");
-      }, 1500);
+        setTimeout(() => {
+          router.push("/job-listings");
+        }, 1500);
+      }
     } catch (error) {
       toast({
         title: "Error",

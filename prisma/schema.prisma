@@ -61,8 +61,8 @@ model CompanyOverview {
     dateFounded DateTime
     techStack   String[]
     description String
-    CompanyId   String?
-    Company     Company? @relation(fields: [CompanyId], references: [id])
+    companyId   String?
+    Company     Company? @relation(fields: [companyId], references: [id])
 }
 
 model Job {
@@ -81,10 +81,10 @@ model Job {
     whoYouAre   String
     niceToHaves  String
     benefits    Json
-    CompanyId   String?
-    CategoryId  String?
-    CategoryJob CategoryJob? @relation(fields: [CategoryId], references: [id])
-    Company     Company? @relation(fields: [CompanyId], references: [id])
+    companyId   String?
+    categoryId  String?
+    CategoryJob CategoryJob? @relation(fields: [categoryId], references: [id])
+    Company     Company? @relation(fields: [companyId], references: [id])
     applicant  Applicant[]
 }
 
