@@ -23,13 +23,21 @@ import InputSkills from "@/components/organisms/InputSkills";
 import CKEditor from "@/components/organisms/CKEditor";
 import useSWR from "swr";
 import { CompanyOverview, Industry } from "@prisma/client";
+import { supabaseUploadFile } from "@/lib/supabase";
+import { useSession } from "next-auth/react";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 interface OverviewFormProps {
   detail: CompanyOverview | undefined;
 }
 
-const OverviewForm: FC<OverviewFormProps> = ({detail}) => {
+const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
   const [editorLoaded, setEditorLoaded] = useState<boolean>(false);
+  const { data: session } = useSession();
+  const { toast } = useToast();
+
+  const router = useRouter();
 
   const { data } = useSWR<Industry[]>("/api/company/industry", fetcher);
 
@@ -45,11 +53,49 @@ const OverviewForm: FC<OverviewFormProps> = ({detail}) => {
       name: detail?.name,
       techStack: detail?.techStack,
       website: detail?.website,
-    }
+    },
   });
 
-  const onSubmit = (val: z.infer<typeof overviewFormSchema>) => {
-    console.log(val);
+  const onSubmit = async (val: z.infer<typeof overviewFormSchema>) => {
+    try {
+      let filename = "";
+
+      if (typeof val.image === "object") {
+        const uploadImage = await supabaseUploadFile(val.image, "company");
+
+        filename = uploadImage.filename;
+      } else {
+        filename = val.image;
+      }
+
+      const body = {
+        ...val,
+        image: filename,
+        companyId: session?.user.id,
+      };
+
+      await fetch("/api/company/overview", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      await toast({
+        title: "Success",
+        description: "Edit profile success",
+      });
+
+      await router.refresh();
+    } catch (error) {
+      await toast({
+        title: "Error",
+        description: "Edit profile failed",
+      });
+
+      console.log(error);
+    }
   };
 
   useEffect(() => {

@@ -57,7 +57,7 @@ model CompanyOverview {
     name        String
     location    String
     employee    String
-    industryId  String
+    industry  String
     dateFounded DateTime
     techStack   String[]
     description String
