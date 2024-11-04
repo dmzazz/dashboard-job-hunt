@@ -17,18 +17,35 @@ import { CalendarIcon } from "lucide-react";
 import React, { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { boolean, z } from "zod";
-import { cn } from "@/lib/utils";
+import { cn, fetcher } from "@/lib/utils";
 import { format } from "date-fns";
 import InputSkills from "@/components/organisms/InputSkills";
 import CKEditor from "@/components/organisms/CKEditor";
+import useSWR from "swr";
+import { CompanyOverview, Industry } from "@prisma/client";
 
-interface OverviewFormProps {}
+interface OverviewFormProps {
+  detail: CompanyOverview | undefined;
+}
 
-const OverviewForm: FC<OverviewFormProps> = ({}) => {
+const OverviewForm: FC<OverviewFormProps> = ({detail}) => {
   const [editorLoaded, setEditorLoaded] = useState<boolean>(false);
+
+  const { data } = useSWR<Industry[]>("/api/company/industry", fetcher);
 
   const form = useForm<z.infer<typeof overviewFormSchema>>({
     resolver: zodResolver(overviewFormSchema),
+    defaultValues: {
+      dateFounded: detail?.dateFounded,
+      description: detail?.description,
+      employee: detail?.employee,
+      image: detail?.image,
+      industry: detail?.industry,
+      location: detail?.location,
+      name: detail?.name,
+      techStack: detail?.techStack,
+      website: detail?.website,
+    }
   });
 
   const onSubmit = (val: z.infer<typeof overviewFormSchema>) => {
@@ -145,9 +162,9 @@ const OverviewForm: FC<OverviewFormProps> = ({}) => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {LOCATION_OPTIONS.map((item: optionsType, i: number) => (
-                            <SelectItem key={item.id + i} value={item.id}>
-                              {item.label}
+                          {data?.map((item: Industry) => (
+                            <SelectItem key={item.id} value={item.id}>
+                              {item.name}
                             </SelectItem>
                           ))}
                         </SelectContent>
