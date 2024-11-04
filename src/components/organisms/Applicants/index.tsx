@@ -2,10 +2,13 @@ import React, { FC } from "react";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { JOB_APPLICANT_COLUMNS, JOB_APPLICANT_DATA } from "@/constant";
 import ButtonActionTable from "../ButtonActionTable";
+import { Applicant } from "@prisma/client";
 
-interface ApplicantsProps {}
+interface ApplicantsProps {
+  applicants: any;
+}
 
-const Applicants: FC<ApplicantsProps> = ({}) => {
+const Applicants: FC<ApplicantsProps> = ({ applicants }) => {
   return (
     <Table>
       <TableCaption>A list of your recent invoices.</TableCaption>
@@ -18,17 +21,20 @@ const Applicants: FC<ApplicantsProps> = ({}) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {JOB_APPLICANT_DATA.map((item: any, i: number) => (
+        {applicants && (
           <>
-            <TableRow key={item.name + i}>
-              <TableCell>{item.name}</TableCell>
-              <TableCell>{item.appliedDate}</TableCell>
-              <TableCell>
-                <ButtonActionTable url="" />
-              </TableCell>
-            </TableRow>
+            {applicants.map((item: any, i: number) => (
+              <>
+                <TableRow key={item.id + i}>
+                  <TableCell>{item.user.name}</TableCell>
+                  <TableCell>
+                    <ButtonActionTable url="" />
+                  </TableCell>
+                </TableRow>
+              </>
+            ))}
           </>
-        ))}
+        )}
       </TableBody>
     </Table>
   );
