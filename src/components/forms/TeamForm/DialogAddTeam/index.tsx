@@ -12,6 +12,9 @@ import { z } from "zod";
 import { Separator } from "@/components/ui/separator";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
+import { useSession } from "next-auth/react";
 
 interface DialogAddTeamProps {}
 
@@ -20,8 +23,35 @@ const DialogAddTeam: FC<DialogAddTeamProps> = ({}) => {
     resolver: zodResolver(teamFormSchema),
   });
 
-  const onSubmit = (val: z.infer<typeof teamFormSchema>) => {
-    console.log(val);
+  const { data: session } = useSession();
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const onSubmit = async (val: z.infer<typeof teamFormSchema>) => {
+    try {
+      const body = { ...val, companyId: session?.user?.id };
+
+      await fetch("/api/company/teams", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      toast({
+        title: "Success",
+        description: "Team member added successfully",
+      });
+
+      await router.refresh();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to add team member",
+      });
+      console.error(error);
+    }
   };
   return (
     <Dialog>
@@ -83,7 +113,7 @@ const DialogAddTeam: FC<DialogAddTeamProps> = ({}) => {
               />
               <FormField
                 control={form.control}
-                name="linkedln"
+                name="linkedin"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Linkedln</FormLabel>

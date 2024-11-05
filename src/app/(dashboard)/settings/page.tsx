@@ -9,25 +9,27 @@ import prisma from "../../../../lib/prisma";
 
 interface SettingsProps {}
 
-async function getDetailCompany(){
+async function getDetailCompany() {
   const session = await getServerSession(authOptions);
 
   const company = await prisma.company.findFirst({
     where: {
       id: session?.user.id,
     },
-    include:{
-      CompanyOverview: true
-    }
-  })
+    include: {
+      CompanyOverview: true,
+      CompanySocialMedia: true,
+      CompanyTeam: true,
+    },
+  });
 
-  return company
+  return company;
 }
 
 const Settings: FC<SettingsProps> = async ({}) => {
-  const company = await getDetailCompany()
-  
-  console.log(company)
+  const company = await getDetailCompany();
+
+  console.log(company);
   return (
     <div>
       <div className="font-semibold text-3xl mb-5">Settings</div>
@@ -39,13 +41,13 @@ const Settings: FC<SettingsProps> = async ({}) => {
           <TabsTrigger value="teams">Teams</TabsTrigger>
         </TabsList>
         <TabsContent value="overview">
-          <OverviewForm detail={company?.CompanyOverview[0]}/>
+          <OverviewForm detail={company?.CompanyOverview[0]} />
         </TabsContent>
         <TabsContent value="socialLinks">
-          <SocialMediaForm />
+          <SocialMediaForm detail={company?.CompanySocialMedia[0]} />
         </TabsContent>
         <TabsContent value="teams">
-          <TeamForm />
+          <TeamForm teams={company?.CompanyTeam} />
         </TabsContent>
       </Tabs>
     </div>

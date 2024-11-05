@@ -10,7 +10,7 @@ interface CustomUploadProps {
 }
 
 const CustomUpload: FC<CustomUploadProps> = ({ form, name }) => {
-  const [previewImg, setPreviewImg] = useState<any>("");
+  const [previewImg, setPreviewImg] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -32,7 +32,7 @@ const CustomUpload: FC<CustomUploadProps> = ({ form, name }) => {
     }
 
     if (form.getValues(name) !== "") {
-      getImage;
+      getImage();
     }
   }, []);
 
