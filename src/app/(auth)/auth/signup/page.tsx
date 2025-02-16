@@ -43,7 +43,7 @@ const SignUpPage: FC<SignUpPageProps> = ({}) => {
       if (response.ok) {
         toast({
           title: "Success",
-          description: "login success",
+          description: "register success",
         });
         setTimeout(() => {
           router.push("/auth/signin");
