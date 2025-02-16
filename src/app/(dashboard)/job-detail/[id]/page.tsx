@@ -13,7 +13,7 @@ interface JobDetailPageProps {
   params: paramsType;
 }
 
-export const revalidate = 0
+export const revalidate = 0;
 
 async function getDetailJob(id: string) {
   const job = await prisma.job.findFirst({
@@ -21,7 +21,7 @@ async function getDetailJob(id: string) {
       id: id,
     },
     include: {
-      applicant: {
+      Applicant: {
         include: {
           user: true,
         },
@@ -58,7 +58,7 @@ const JobDetailPage: FC<JobDetailPageProps> = async ({ params }) => {
           <TabsTrigger value="jobDetails">Job Details</TabsTrigger>
         </TabsList>
         <TabsContent value="applicants">
-          <Applicants applicants={job?.applicant} />
+          <Applicants applicants={job?.Applicant} />
         </TabsContent>
         <TabsContent value="jobDetails">
           <JobDetail detail={job} />

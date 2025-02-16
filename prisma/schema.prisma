@@ -85,7 +85,7 @@ model Job {
     categoryId  String?
     CategoryJob CategoryJob? @relation(fields: [categoryId], references: [id])
     Company     Company? @relation(fields: [companyId], references: [id])
-    applicant  Applicant[]
+    Applicant  Applicant[]
 }
 
 model User {
@@ -93,7 +93,7 @@ model User {
     name    String
     password String
     email   String @unique
-    applicant Applicant[]
+    Applicant Applicant[]
 }
 
 model Applicant {
@@ -104,7 +104,7 @@ model Applicant {
     job         Job? @relation(fields: [jobId], references: [id])
     previousJobTite String
     phone       String
-    linkedln    String
+    linkedin    String
     portfolio   String
     coverLetter String
     resume      String
