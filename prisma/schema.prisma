@@ -7,6 +7,7 @@ datasource db {
     url = env("DATABASE_URL")
 }
 
+
 model CategoryJob {
     id      String @id @default(cuid())
     name    String
@@ -26,7 +27,7 @@ model Company {
     CompanySocialMedia CompanySocialMedia[]
     CompanyTeam CompanyTeam[]
     CompanyOverview CompanyOverview[]
-    Job         Job[]
+    Job     Job[]
 }
 
 model CompanySocialMedia {
@@ -57,12 +58,12 @@ model CompanyOverview {
     name        String
     location    String
     employee    String
-    industry  String
+    industry    String
     dateFounded DateTime
     techStack   String[]
     description String
     companyId   String?
-    Company     Company? @relation(fields: [companyId], references: [id])
+    Company Company? @relation(fields: [companyId], references: [id])
 }
 
 model Job {
@@ -79,21 +80,21 @@ model Job {
     description String
     responsibility  String
     whoYouAre   String
-    niceToHaves  String
+    niceToHaves String
     benefits    Json
     companyId   String?
     categoryId  String?
     CategoryJob CategoryJob? @relation(fields: [categoryId], references: [id])
     Company     Company? @relation(fields: [companyId], references: [id])
-    applicant  Applicant[]
+    applicant   Applicant[]
 }
 
 model User {
-    id      String @id @default(cuid())
-    name    String
-    password String
-    email   String @unique
-    applicant Applicant[]
+    id          String @id @default(cuid())
+    name        String
+    password    String
+    email       String @unique
+    applicant   Applicant[]
 }
 
 model Applicant {
@@ -102,9 +103,9 @@ model Applicant {
     user        User? @relation(fields: [userId], references: [id])
     jobId       String?
     job         Job? @relation(fields: [jobId], references: [id])
-    previousJobTitle String
+    previousJobTitle    String
     phone       String
-    linkedin    String
+    linkedIn       String
     portfolio   String
     coverLetter String
     resume      String
