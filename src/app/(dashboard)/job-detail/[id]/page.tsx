@@ -21,7 +21,7 @@ async function getDetailJob(id: string) {
       id: id,
     },
     include: {
-      Applicant: {
+      applicant: {
         include: {
           user: true,
         },
@@ -58,7 +58,7 @@ const JobDetailPage: FC<JobDetailPageProps> = async ({ params }) => {
           <TabsTrigger value="jobDetails">Job Details</TabsTrigger>
         </TabsList>
         <TabsContent value="applicants">
-          <Applicants applicants={job?.Applicant} />
+          <Applicants applicants={job?.applicant} />
         </TabsContent>
         <TabsContent value="jobDetails">
           <JobDetail detail={job} />
