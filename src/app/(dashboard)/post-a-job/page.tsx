@@ -29,7 +29,7 @@ import { useToast } from "@/hooks/use-toast";
 interface PostJobPageProps {}
 
 const PostJobPage: FC<PostJobPageProps> = ({}) => {
-  const { data, error, isLoading } = useSWR<CategoryJob>("/api/job/categories", fetcher);
+  const { data, error, isLoading } = useSWR<CategoryJob[]>("/api/job/categories", fetcher);
 
   const { data: session } = useSession();
 

@@ -28,6 +28,6 @@ export async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit
 }
 
 // Data format
-export const dateFormat = (date: string, format: string = "DD MM YYYY") => {
+export const dateFormat = (date: any, format: string = "DD MM YYYY") => {
   return moment(date).format(format);
 };

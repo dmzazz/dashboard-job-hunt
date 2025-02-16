@@ -1,6 +1,5 @@
 import { FC } from "react";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import ButtonActionTable from "@/components/organisms/ButtonActionTable";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -10,6 +9,7 @@ import { Job } from "@prisma/client";
 import moment from "moment";
 import { getServerSession } from "next-auth";
 import prisma from "../../../../lib/prisma";
+import { authOptions } from "@/lib/authOptions";
 
 interface JobListingsPageProps {}
 
