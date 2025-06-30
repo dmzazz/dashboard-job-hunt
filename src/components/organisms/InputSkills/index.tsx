@@ -31,6 +31,10 @@ const InputSkills: FC<InputSkillsProps> = ({ form, name, label }) => {
     setValues(newValue);
 
     form.setValue(name, newValue);
+
+    if (inputRef.current) {
+      inputRef.current.value = ""
+    }
   };
 
   const handleDeleteValue = (item: string) => {

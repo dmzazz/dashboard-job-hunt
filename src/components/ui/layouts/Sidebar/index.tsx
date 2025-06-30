@@ -27,7 +27,7 @@ const Sidebar: FC<SidebarProps> = ({}) => {
               <AiOutlineMessage className="mr-2 text-lg" />
               Messages
             </Button>
-            <Button variant={"ghost"} className="w-full justify-start rounded-none hover:text-blue-500">
+            <Button variant={"ghost"} className="w-full justify-start rounded-none hover:text-blue-500" onClick={() => router.push("/company-profile")}>
               <BsBuildings className="mr-2 text-lg" />
               Company Profile
             </Button>
