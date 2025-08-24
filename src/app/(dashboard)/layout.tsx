@@ -1,13 +1,12 @@
-import type { Metadata } from "next";
-import { Epilogue } from "next/font/google";
-import "../globals.css";
-import Sidebar from "@/components/ui/layouts/Sidebar";
-import { Header } from "@/components/ui/layouts/Header";
-import NextAuthProvider from "@/context/NextAuthProvider";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import MainLayouts from "@/components/ui/layouts/MainLayouts";
 import { Toaster } from "@/components/ui/toaster";
+import NextAuthProvider from "@/context/NextAuthProvider";
 import { authOptions } from "@/lib/authOptions";
+import type { Metadata } from "next";
+import { getServerSession } from "next-auth";
+import { Epilogue } from "next/font/google";
+import { redirect } from "next/navigation";
+import "../globals.css";
 
 const epilogue = Epilogue({ subsets: ["latin"] });
 
@@ -31,21 +30,7 @@ export default async function RootLayout({
       <body className={epilogue.className}>
         <main>
           <NextAuthProvider>
-            <div className="border-t">
-              <div className="bg-background">
-                <div className="flex flex-row">
-                  <div className="hidden lg:block w-[18%]">
-                    <Sidebar />
-                  </div>
-                  <div className="col-span-3 overflow-auto lg:col-span-5 lg:border-l w-[82%]">
-                    <div className="px-6 py-6 lg:px-8">
-                      <Header />
-                      {children}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <MainLayouts>{children}</MainLayouts>
           </NextAuthProvider>
           <Toaster />
         </main>
