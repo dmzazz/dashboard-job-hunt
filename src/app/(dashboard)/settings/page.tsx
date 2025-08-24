@@ -1,11 +1,11 @@
-import React, { FC, use } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import OverviewForm from "@/components/forms/OverviewForm";
 import SocialMediaForm from "@/components/forms/SocialMediaForm";
 import TeamForm from "@/components/forms/TeamForm";
-import { getServerSession } from "next-auth";
-import prisma from "../../../../lib/prisma";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { authOptions } from "@/lib/authOptions";
+import { getServerSession } from "next-auth";
+import { FC } from "react";
+import prisma from "../../../../lib/prisma";
 
 interface SettingsProps {}
 
@@ -31,10 +31,9 @@ async function getDetailCompany() {
 const Settings: FC<SettingsProps> = async ({}) => {
   const company = await getDetailCompany();
 
-  console.log(company);
   return (
     <div>
-      <div className="font-semibold text-3xl mb-5">Settings</div>
+      <div className="mb-5 text-3xl font-semibold">Settings</div>
 
       <Tabs defaultValue="overview">
         <TabsList className="mb-8">

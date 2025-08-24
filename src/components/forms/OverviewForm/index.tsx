@@ -1,32 +1,49 @@
 "use client";
 
 import TitleForm from "@/components/atoms/TitleForm";
+import CKEditor from "@/components/organisms/CKEditor";
 import CustomUpload from "@/components/organisms/CustomUpload";
 import FieldInput from "@/components/organisms/FieldInput";
+import InputSkills from "@/components/organisms/InputSkills";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { EMPLOYEE_OPTIONS, LOCATION_OPTIONS, optionsType } from "@/constant";
-import { overviewFormSchema } from "@/lib/form-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon } from "lucide-react";
-import React, { FC, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { boolean, z } from "zod";
-import { cn, fetcher } from "@/lib/utils";
-import { format } from "date-fns";
-import InputSkills from "@/components/organisms/InputSkills";
-import CKEditor from "@/components/organisms/CKEditor";
-import useSWR from "swr";
-import { CompanyOverview, Industry } from "@prisma/client";
-import { supabaseUploadFile } from "@/lib/supabase";
-import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
+import { overviewFormSchema } from "@/lib/form-schema";
+import { supabaseUploadFile } from "@/lib/supabase";
+import { cn, fetcher } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CompanyOverview, Industry } from "@prisma/client";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { FC, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import useSWR from "swr";
+import { z } from "zod";
 
 interface OverviewFormProps {
   detail: CompanyOverview | undefined;
@@ -105,18 +122,27 @@ const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
   return (
     <div>
       <div className="my-5">
-        <TitleForm title="Basic Information" subtitle="This is company information that you can update anytime" />
+        <TitleForm
+          title="Basic Information"
+          subtitle="This is company information that you can update anytime"
+        />
       </div>
 
       <Separator className="mb-7" />
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-7">
-          <FieldInput title="Company Logo" subtitle="This image will be shown publicly as company logo.">
+          <FieldInput
+            title="Company Logo"
+            subtitle="This image will be shown publicly as company logo."
+          >
             <CustomUpload form={form} name="image" />
           </FieldInput>
 
-          <FieldInput title="Company Details" subtitle="Introduce your company core info quickly to users by fill up companyt details.">
+          <FieldInput
+            title="Company Details"
+            subtitle="Introduce your company core info quickly to users by fill up companyt details."
+          >
             <div className="space-y-5">
               <FormField
                 control={form.control}
@@ -125,7 +151,11 @@ const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
                   <FormItem>
                     <FormLabel>Company Name</FormLabel>
                     <FormControl>
-                      <Input className="w-[450px]" placeholder="Twitter" {...field} />
+                      <Input
+                        className="w-[450px]"
+                        placeholder="Company name"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -138,7 +168,11 @@ const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
                   <FormItem>
                     <FormLabel>Website</FormLabel>
                     <FormControl>
-                      <Input className="w-[450px]" placeholder="https://twitter.com" {...field} />
+                      <Input
+                        className="w-[450px]"
+                        placeholder="https://yuk-kerja.com"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -151,18 +185,23 @@ const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Location</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Location" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {LOCATION_OPTIONS.map((item: optionsType, i: number) => (
-                          <SelectItem key={item.id + i} value={item.id}>
-                            {item.label}
-                          </SelectItem>
-                        ))}
+                        {LOCATION_OPTIONS.map(
+                          (item: optionsType, i: number) => (
+                            <SelectItem key={item.id + i} value={item.id}>
+                              {item.label}
+                            </SelectItem>
+                          ),
+                        )}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -170,25 +209,30 @@ const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
                 )}
               />
 
-              <div className="w-[450px] grid grid-cols-2 gap-4">
+              <div className="grid w-[450px] grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
                   name="employee"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Employee</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Employee" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {EMPLOYEE_OPTIONS.map((item: optionsType, i: number) => (
-                            <SelectItem key={item.id + i} value={item.id}>
-                              {item.label}
-                            </SelectItem>
-                          ))}
+                          {EMPLOYEE_OPTIONS.map(
+                            (item: optionsType, i: number) => (
+                              <SelectItem key={item.id + i} value={item.id}>
+                                {item.label}
+                              </SelectItem>
+                            ),
+                          )}
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -201,7 +245,10 @@ const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Industry</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Industry" />
@@ -230,14 +277,32 @@ const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
-                          <Button variant={"outline"} className={cn("w-[450px] pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
-                            {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[450px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground",
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date > new Date() || date < new Date("1900-01-01")} initialFocus />
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                        />
                       </PopoverContent>
                     </Popover>
                     <FormMessage />
@@ -245,12 +310,23 @@ const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
                 )}
               />
 
-              <InputSkills form={form} name="techStack" label="Add Tech Stack" />
+              <InputSkills
+                form={form}
+                name="techStack"
+                label="Add Tech Stack"
+              />
             </div>
           </FieldInput>
 
-          <FieldInput title="About Company" subtitle="Brief description for your company. URLs are hyperlinked.">
-            <CKEditor form={form} name="description" editorLoaded={editorLoaded} />
+          <FieldInput
+            title="About Company"
+            subtitle="Brief description for your company. URLs are hyperlinked."
+          >
+            <CKEditor
+              form={form}
+              name="description"
+              editorLoaded={editorLoaded}
+            />
           </FieldInput>
 
           <div className="flex justify-end">

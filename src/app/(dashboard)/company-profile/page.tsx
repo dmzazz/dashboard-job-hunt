@@ -1,22 +1,20 @@
-import React, { FC } from 'react'
+"use client";
 
-interface CompanyProfileProps {
-  
-}
+import { fetcher } from "@/lib/utils";
+import { Company } from "@prisma/client";
+import React, { FC, useEffect } from "react";
+import useSWR from "swr";
 
-const CompanyProfile: FC<CompanyProfileProps> = async ({  }) => {
-  const data = await fetch("http://localhost:3000/api/company/profile")
-  const response = await data.json()
-  console.log(response)
-  return (
-    <div>
-     {response.map((item: any) => (
-        <div key={item.id}>
-            {item.name}
-        </div>
-     ))}
-    </div>
-  )
-}
+interface CompanyProfileProps {}
+
+const CompanyProfile: FC<CompanyProfileProps> = ({}) => {
+  const { data, isLoading, error } = useSWR<Company[]>(
+    "/api/company/profile",
+    fetcher,
+  );
+  console.log(data);
+
+  return <div>Company profile</div>;
+};
 
 export default CompanyProfile;
