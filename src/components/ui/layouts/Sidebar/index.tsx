@@ -12,7 +12,7 @@ import {
 import { BsBuildings, BsGear } from "react-icons/bs";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { FaArrowLeftLong, FaArrowRight } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 
 interface SidebarProps {
@@ -22,6 +22,7 @@ interface SidebarProps {
 
 const Sidebar: FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   // Main menu
   const mainMenu = [
@@ -79,7 +80,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
               <Button
                 key={index}
                 variant="ghost"
-                className="w-full justify-start rounded-none hover:text-blue-500"
+                className={`w-full justify-start rounded-none hover:text-blue-500 ${pathname === item.path && "bg-accent"}`}
                 onClick={() => item.path && router.push(item.path)}
               >
                 <item.icon className={`${isOpen && "mr-2"} text-lg`} />
@@ -101,7 +102,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             <Button
               key={index}
               variant="ghost"
-              className={`w-full justify-start rounded-none hover:text-blue-500 ${item.isLogout && "text-destructive hover:bg-red-200 hover:text-destructive"}`}
+              className={`w-full justify-start rounded-none hover:text-blue-500 ${pathname === item.path && "bg-accent"} ${item.isLogout && "text-destructive hover:bg-red-200 hover:text-destructive"}`}
               onClick={() =>
                 item.action
                   ? item.action()
