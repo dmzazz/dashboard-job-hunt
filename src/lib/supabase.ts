@@ -24,6 +24,10 @@ export const supabaseUploadFile = async (file: File | string, bucket: "company" 
     cacheControl: "3600",
     upsert: false,
   });
+
+  if (error) {
+    throw new Error(error.message)
+  }
   return {
     data,
     error,
