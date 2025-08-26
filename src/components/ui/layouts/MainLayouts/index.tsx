@@ -11,6 +11,7 @@ const MainLayouts = ({
 }>) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
+
   return (
     <div className="border-t">
       <div className="bg-background">

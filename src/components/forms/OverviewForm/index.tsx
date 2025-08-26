@@ -91,7 +91,7 @@ const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
         companyId: session?.user.id,
       };
 
-      await fetch("/api/company/overview", {
+      const response = await fetch("/api/company/overview", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,10 +99,18 @@ const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
         body: JSON.stringify(body),
       });
 
-      await toast({
-        title: "Success",
-        description: "Edit profile success",
-      });
+      if (!response.ok) {
+        const msg = await response.text();
+        await toast({
+          title: "Error",
+          description: msg || response.statusText,
+        });
+      } else {
+        await toast({
+          title: "Success",
+          description: "Edit profile success",
+        });
+      }
 
       await router.refresh();
     } catch (error) {
