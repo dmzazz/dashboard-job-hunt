@@ -112,6 +112,9 @@ const OverviewForm: FC<OverviewFormProps> = ({ detail }) => {
         });
       }
 
+      // Save company name to localStorage
+      localStorage.setItem("company-name", body.name);
+
       await router.refresh();
     } catch (error) {
       await toast({
