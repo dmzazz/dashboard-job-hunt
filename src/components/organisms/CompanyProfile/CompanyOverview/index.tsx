@@ -52,12 +52,8 @@ const CompanyOverview: FC<CompanyOverviewProps> = ({
           <CiGlobe className="h-8 w-8" />
           <div className="ml-2">
             <p className="text-sm">Website</p>
-            <Link
-              href={website || ""}
-              target="_blank"
-              className="font-semibold"
-            >
-              {website || ""}
+            <Link href={website} target="_blank" className="font-semibold">
+              {website}
             </Link>
           </div>
         </div>
@@ -76,7 +72,6 @@ const CompanyOverview: FC<CompanyOverviewProps> = ({
         <IoCodeSlashSharp className="h-8 w-8" />
         <h3 className="-mb-2 ml-2 text-lg font-semibold">Tech Stack</h3>
       </div>
-
       <div className="mt-4 grid grid-cols-2 gap-4 sm:flex sm:gap-0 sm:space-x-4">
         {techStack?.map((item: any, index: number) => (
           <span key={index} className="rounded border px-2 py-1 text-sm">

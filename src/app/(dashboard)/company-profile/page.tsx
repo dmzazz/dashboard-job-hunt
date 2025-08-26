@@ -103,6 +103,7 @@ const CompanyProfile: FC<CompanyProfileProps> = async ({}) => {
               </div>
             </div>
 
+            {/* Company Detail */}
             <Tabs defaultValue="overview" className="mt-10">
               <TabsList className="mb-4">
                 <TabsTrigger value="overview">Overview</TabsTrigger>
