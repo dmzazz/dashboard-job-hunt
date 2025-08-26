@@ -44,7 +44,10 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
     {
       label: "Log out",
       icon: AiOutlineLogout,
-      action: () => signOut(),
+      action: () => {
+        localStorage.clear();
+        signOut();
+      },
       isLogout: true,
     },
   ];

@@ -4,9 +4,9 @@ import { BsBuildings, BsPeople } from "react-icons/bs";
 import { CiCalendar, CiGlobe } from "react-icons/ci";
 import { IoCodeSlashSharp, IoLocationOutline } from "react-icons/io5";
 
-interface loadingProps {}
+interface LoadingProps {}
 
-const loading: FC<loadingProps> = ({}) => {
+const Loading: FC<LoadingProps> = ({}) => {
   return (
     <>
       <div className="flex items-center">
@@ -94,4 +94,4 @@ const loading: FC<loadingProps> = ({}) => {
   );
 };
 
-export default loading;
+export default Loading;
