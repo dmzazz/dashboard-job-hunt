@@ -1,56 +1,26 @@
 "use client";
 
-import React, { FC } from "react";
-import { Button } from "../../button";
-import {
-  AiOutlineCalendar,
-  AiOutlineHome,
-  AiOutlineLogout,
-  AiOutlineMessage,
-  AiOutlineUsergroupAdd,
-} from "react-icons/ai";
-import { BsBuildings, BsGear } from "react-icons/bs";
-import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
-import { FaArrowLeftLong, FaArrowRight } from "react-icons/fa6";
+import { MAIN_MENU, SETTINGS_MENU } from "@/constant";
 import { usePathname, useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
+import React, { Dispatch, FC, SetStateAction } from "react";
+import { FaArrowLeftLong, FaArrowRight } from "react-icons/fa6";
+import { Button } from "../../button";
 
 interface SidebarProps {
   isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  isSidebarVisible: boolean;
+  setIsSidebarVisible: Dispatch<SetStateAction<boolean>>;
 }
 
-const Sidebar: FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
+const Sidebar: FC<SidebarProps> = ({
+  isOpen,
+  setIsOpen,
+  isSidebarVisible,
+  setIsSidebarVisible,
+}) => {
   const router = useRouter();
   const pathname = usePathname();
-
-  // Main menu
-  const mainMenu = [
-    { label: "Home", icon: AiOutlineHome, path: "/" },
-    { label: "Messages", icon: AiOutlineMessage },
-    { label: "Company Profile", icon: BsBuildings, path: "/company-profile" },
-    { label: "All Applicants", icon: AiOutlineUsergroupAdd },
-    {
-      label: "Job Listings",
-      icon: HiOutlineClipboardDocumentList,
-      path: "/job-listings",
-    },
-    { label: "My Schedule", icon: AiOutlineCalendar },
-  ];
-
-  // Menu settings
-  const settingsMenu = [
-    { label: "Settings", icon: BsGear, path: "/settings" },
-    {
-      label: "Log out",
-      icon: AiOutlineLogout,
-      action: () => {
-        localStorage.clear();
-        signOut();
-      },
-      isLogout: true,
-    },
-  ];
 
   return (
     <div
@@ -64,7 +34,14 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             )}
 
             {isOpen ? (
-              <button onClick={() => setIsOpen(!isOpen)}>
+              <button
+                onClick={() => {
+                  setIsOpen(!isOpen);
+
+                  // If screen width < 640 then don't render sidebar
+                  if (window.innerWidth < 640) setIsSidebarVisible(false);
+                }}
+              >
                 <FaArrowLeftLong className="cursor-pointer" />
               </button>
             ) : (
@@ -80,7 +57,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
 
         {/* Main Menu */}
         <div className="space-y-3">
-          {mainMenu.map((item, index) => (
+          {MAIN_MENU.map((item, index) => (
             <Button
               key={index}
               variant="ghost"
@@ -103,7 +80,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             <h2 className="mb-2 px-4 text-lg font-semibold">Settings</h2>
           )}
 
-          {settingsMenu.map((item, index) => (
+          {SETTINGS_MENU.map((item, index) => (
             <Button
               key={index}
               variant="ghost"
