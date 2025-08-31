@@ -75,7 +75,7 @@ export const Header: FC<HeaderProps> = ({
           </Button>
         </div>
       ) : (
-        <Button
+        <Button variant="ghost"
           onClick={() => {
             setIsSidebarVisible(!isSidebarVisible);
             setIsOpen(!isOpen);
