@@ -94,12 +94,14 @@ const CompanyProfile: FC<CompanyProfileProps> = async ({}) => {
               {/* Company Name */}
               <div className="ml-5 flex-grow">
                 <div className="flex items-center">
-                  <BsBuildings className="h-14 w-14" />
-                  <h2 className="-mb-4 ml-2 text-5xl font-bold">
+                  <BsBuildings className="h-8 w-8 sm:h-14 sm:w-14" />
+                  <h2 className="-mb-4 ml-2 text-xl font-bold sm:text-5xl">
                     {overview?.name || ""}
                   </h2>
                 </div>
-                <h3 className="mt-2 text-2xl">{overview?.industry || ""}</h3>
+                <h3 className="mt-2 text-lg sm:text-2xl">
+                  {overview?.industry || ""}
+                </h3>
               </div>
             </div>
 
