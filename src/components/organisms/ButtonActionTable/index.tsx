@@ -1,19 +1,22 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
-import { MoreVerticalIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { FC } from "react";
+import { FC } from "react";
 
 interface ButtonActionTableProps {
-    url: string;
+  url: string;
+  description: string;
 }
 
-const ButtonActionTable: FC<ButtonActionTableProps> = ({url}) => {
+const ButtonActionTable: FC<ButtonActionTableProps> = ({
+  url,
+  description,
+}) => {
   const router = useRouter();
   return (
-    <Button onClick={() => router.push(url)} size="icon" variant="outline">
-      <MoreVerticalIcon className="w-4 h-4" />
+    <Button onClick={() => router.push(url)} variant="outline">
+      {description}
     </Button>
   );
 };
