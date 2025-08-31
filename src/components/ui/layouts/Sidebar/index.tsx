@@ -54,7 +54,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
 
   return (
     <div
-      className={`fixed min-h-screen border-r pb-12 ${isOpen ? "w-[280px]" : "w-[80px]"} `}
+      className={`fixed z-50 min-h-screen border-r bg-white pb-12 transition-all ${isOpen ? "w-[280px]" : "w-[80px]"} `}
     >
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
@@ -76,21 +76,23 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
               </button>
             )}
           </div>
+        </div>
 
-          {/* Main Menu */}
-          <div className="space-y-3">
-            {mainMenu.map((item, index) => (
-              <Button
-                key={index}
-                variant="ghost"
-                className={`w-full justify-start rounded-none hover:text-blue-500 ${pathname === item.path && "bg-accent"}`}
-                onClick={() => item.path && router.push(item.path)}
-              >
-                <item.icon className={`${isOpen && "mr-2"} text-lg`} />
-                {isOpen && item.label}
-              </Button>
-            ))}
-          </div>
+        {/* Main Menu */}
+        <div className="space-y-3">
+          {mainMenu.map((item, index) => (
+            <Button
+              key={index}
+              variant="ghost"
+              className={`w-full justify-start rounded-none hover:text-blue-500 ${isOpen && "pl-7"} ${pathname === item.path && "bg-gray-300"}`}
+              onClick={() => item.path && router.push(item.path)}
+            >
+              <item.icon
+                className={`${isOpen ? "mr-2" : "w-full text-center"} text-lg`}
+              />
+              {isOpen && item.label}
+            </Button>
+          ))}
         </div>
       </div>
 
