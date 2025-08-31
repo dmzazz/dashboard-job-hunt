@@ -39,7 +39,7 @@ const Sidebar: FC<SidebarProps> = ({
                   setIsOpen(!isOpen);
 
                   // If screen width < 640 then don't render sidebar
-                  if (window.innerWidth < 640) setIsSidebarVisible(false);
+                  if (window.innerWidth < 640) setIsSidebarVisible(!isSidebarVisible);
                 }}
               >
                 <FaArrowLeftLong className="cursor-pointer" />
