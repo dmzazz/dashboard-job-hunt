@@ -11,7 +11,9 @@ import { useToast } from "@/hooks/use-toast";
 type SidebarType = {
   label: string;
   icon: IconType;
-  path: string;
+  path?: string;
+  action?: () => void;
+  isLogout?: boolean;
 };
 
 interface SidebarProps {
@@ -99,7 +101,7 @@ const Sidebar: FC<SidebarProps> = ({
             <h2 className="mb-2 px-4 text-lg font-semibold">Settings</h2>
           )}
 
-          {SETTINGS_MENU.map((item, index) => (
+          {SETTINGS_MENU.map((item: SidebarType, index: number) => (
             <Button
               key={index}
               variant="ghost"
