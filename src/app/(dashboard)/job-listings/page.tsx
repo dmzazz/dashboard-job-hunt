@@ -2,7 +2,14 @@ import { FC } from "react";
 
 import ButtonActionTable from "@/components/organisms/ButtonActionTable";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { JOB_LISTING_COLUMNS } from "@/constant";
 import { dateFormat } from "@/lib/utils";
 import { Job } from "@prisma/client";
@@ -10,6 +17,12 @@ import moment from "moment";
 import { getServerSession } from "next-auth";
 import prisma from "../../../../lib/prisma";
 import { authOptions } from "@/lib/authOptions";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { MoreVerticalIcon } from "lucide-react";
 
 interface JobListingsPageProps {}
 
@@ -30,11 +43,9 @@ async function getDataJobs() {
 const JobListingsPage: FC<JobListingsPageProps> = async ({}) => {
   const jobs = await getDataJobs();
 
-  // console.log(jobs);
-
   return (
     <div>
-      <div className="font-semibold text-3xl">Job Listings</div>
+      <div className="text-3xl font-semibold">Job Listings</div>
 
       <div className="mt-10">
         <Table>
@@ -50,9 +61,19 @@ const JobListingsPage: FC<JobListingsPageProps> = async ({}) => {
             {jobs.map((item: Job, i: number) => (
               <TableRow key={item.roles + i}>
                 <TableCell>{item.roles}</TableCell>
-                <TableCell>{moment(item.datePosted).isBefore(item.dueDate) ? <Badge>Live</Badge> : <Badge variant="destructive">Expired</Badge>}</TableCell>
-                <TableCell>{dateFormat(item.datePosted)}</TableCell>
-                <TableCell>{dateFormat(item.dueDate)}</TableCell>
+                <TableCell>
+                  {moment(item.datePosted).isBefore(item.dueDate) ? (
+                    <Badge>Live</Badge>
+                  ) : (
+                    <Badge variant="destructive">Expired</Badge>
+                  )}
+                </TableCell>
+                <TableCell>
+                  {moment(item.datePosted).format("Do MMMM yyyy")}
+                </TableCell>
+                <TableCell>
+                  {moment(item.dueDate).format("Do MMMM yyyy")}
+                </TableCell>
                 <TableCell>
                   <Badge variant="outline">{item.jobType}</Badge>
                 </TableCell>
@@ -61,7 +82,27 @@ const JobListingsPage: FC<JobListingsPageProps> = async ({}) => {
                   {item.applicants} / {item.needs}
                 </TableCell>
                 <TableCell>
-                  <ButtonActionTable url={`/job-detail/${item.id}`} />
+                  <Popover>
+                    <PopoverTrigger>
+                      <MoreVerticalIcon className="h-4 w-4 hover:cursor-pointer" />
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      <div className="flex flex-col gap-4">
+                        <ButtonActionTable
+                          url={`/job-detail/${item.id}`}
+                          description="Detail"
+                        />
+                        <ButtonActionTable
+                          url={`/job-detail/${item.id}`}
+                          description="Update"
+                        />
+                        <ButtonActionTable
+                          url={`/job-detail/${item.id}`}
+                          description="Detail"
+                        />
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                 </TableCell>
               </TableRow>
             ))}

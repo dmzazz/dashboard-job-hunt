@@ -1,4 +1,3 @@
-
 import { comparePassword } from "@/lib/utils";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
@@ -30,7 +29,10 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const isMatch = await comparePassword(credentials?.password!!, user.password);
+        const isMatch = await comparePassword(
+          credentials?.password!!,
+          user.password,
+        );
 
         if (isMatch) {
           return user;
