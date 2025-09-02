@@ -37,7 +37,7 @@ const CustomUpload: FC<CustomUploadProps> = ({ form, name }) => {
   }, []);
 
   return (
-    <div className="inline-flex items-center gap-8">
+    <div className="inline-flex flex-col sm:flex-row items-center gap-8">
       <div>{previewImg !== "" && <Image width={120} height={120} src={previewImg} alt={previewImg} />}</div>
       <div className="py-6 px-10 border-2 cursor-pointer border-bluePrimary border-dashed w-max rounded-sm" onClick={handleUploadFile}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-bluePrimary mx-auto mb-2">
