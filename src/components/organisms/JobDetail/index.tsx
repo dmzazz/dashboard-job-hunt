@@ -18,27 +18,27 @@ const JobDetail: FC<JobDetailProps> = ({ detail }) => {
   const benefits: any = detail?.benefits
   return (
     <div>
-      <div className="grid grid-cols-3 w-full gap-5">
+      <div className="grid grid-cols-1 smgrid-cols-3 w-full gap-5">
         <div className="col-span-2 space-y-10">
           <div>
-            <div className="text-3xl font-semibold">Description</div>
+            <div className="text-xl sm:text-3xl font-semibold">Description</div>
             <div className="text-gray-500 mt-3" dangerouslySetInnerHTML={{ __html: detail?.description!! }}></div>
           </div>
           <div>
-            <div className="text-3xl font-semibold">Responsibilities</div>
+            <div className="text-xl sm:text-3xl font-semibold">Responsibilities</div>
             <div className="text-gray-500 mt-3" dangerouslySetInnerHTML={{ __html: detail?.responsibility!! }}></div>
           </div>
           <div>
-            <div className="text-3xl font-semibold">Who You Are</div>
+            <div className="text-xl sm:text-3xl font-semibold">Who You Are</div>
             <div className="text-gray-500 mt-3" dangerouslySetInnerHTML={{ __html: detail?.whoYouAre!! }}></div>
           </div>
           <div>
-            <div className="text-3xl font-semibold">Nice-To-Haves</div>
+            <div className="text-xl sm:text-3xl font-semibold">Nice-To-Haves</div>
             <div className="text-gray-500 mt-3" dangerouslySetInnerHTML={{ __html: detail?.niceToHaves!! }}></div>
           </div>
         </div>
         <div>
-          <div className="text-3xl font-semibold">About this role</div>
+          <div className="text-xl sm:text-3xl font-semibold">About this role</div>
 
           <div className="shadow p-3 text-center my-6">
             {detail?.applicants} <span className="text-gray-500">of {detail?.needs} capacity</span>
@@ -67,7 +67,7 @@ const JobDetail: FC<JobDetailProps> = ({ detail }) => {
           <Separator />
 
           <div className="my-10">
-            <div className="text-3xl font-semibold mb-4">Category</div>
+            <div className="text-xl sm:text-3xl font-semibold mb-4">Category</div>
 
             <div className="space-x-5">
               <Badge>{detail?.CategoryJob?.name}</Badge>
@@ -77,7 +77,7 @@ const JobDetail: FC<JobDetailProps> = ({ detail }) => {
           <Separator />
 
           <div className="my-10">
-            <div className="text-3xl font-semibold mb-4">Required Skills</div>
+            <div className="text-xl sm:text-3xl font-semibold mb-4">Required Skills</div>
 
             <div className="space-x-5">
               {detail?.requiredSkills.map((item: string, i: number) => (
@@ -93,7 +93,7 @@ const JobDetail: FC<JobDetailProps> = ({ detail }) => {
       <Separator className="my-8" />
 
       <div>
-        <div className="text-3xl font-semibold">Perk & Benefits</div>
+        <div className="text-xl sm:text-3xl font-semibold">Perk & Benefits</div>
         <div className="text-gray-500">This job comes with several perks and benefits</div>
 
         <div className="grid grid-cols-4 gap-5 mt-9">
