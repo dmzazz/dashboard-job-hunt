@@ -1,3 +1,13 @@
+import { signOut } from "next-auth/react";
+import {
+  AiOutlineCalendar,
+  AiOutlineHome,
+  AiOutlineLogout,
+  AiOutlineMessage,
+  AiOutlineUsergroupAdd,
+} from "react-icons/ai";
+import { BsBuildings, BsGear } from "react-icons/bs";
+import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import { EnumValues } from "zod";
 
 export type optionsType = {
@@ -5,9 +15,22 @@ export type optionsType = {
   label: string;
 };
 
-export const JOBTYPES: EnumValues = ["Full-Time", "Part-Time", "Remote", "Internship"];
+export const JOBTYPES: EnumValues = [
+  "Full-Time",
+  "Part-Time",
+  "Remote",
+  "Internship",
+];
 
-export const JOB_LISTING_COLUMNS: string[] = ["Roles", "Status", "Date Posted", "Due Date", "Job Type", "Applicants", "Needs"];
+export const JOB_LISTING_COLUMNS: string[] = [
+  "Roles",
+  "Status",
+  "Date Posted",
+  "Due Date",
+  "Job Type",
+  "Applicants",
+  "Needs",
+];
 
 export const JOB_APPLICANT_COLUMNS: string[] = ["Name"];
 
@@ -75,3 +98,31 @@ export const EMPLOYEE_OPTIONS: optionsType[] = [
     label: "1000-above",
   },
 ];
+
+// Start menu navigation
+export const MAIN_MENU = [
+  { label: "Home", icon: AiOutlineHome, path: "/" },
+  { label: "Messages", icon: AiOutlineMessage },
+  { label: "Company Profile", icon: BsBuildings, path: "/company-profile" },
+  { label: "All Applicants", icon: AiOutlineUsergroupAdd },
+  {
+    label: "Job Listings",
+    icon: HiOutlineClipboardDocumentList,
+    path: "/job-listings",
+  },
+  { label: "My Schedule", icon: AiOutlineCalendar },
+];
+
+export const SETTINGS_MENU = [
+  { label: "Settings", icon: BsGear, path: "/settings" },
+  {
+    label: "Log out",
+    icon: AiOutlineLogout,
+    action: () => {
+      localStorage.clear();
+      signOut();
+    },
+    isLogout: true,
+  },
+];
+// End menu navigation
