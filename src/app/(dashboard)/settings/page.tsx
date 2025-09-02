@@ -33,7 +33,7 @@ const Settings: FC<SettingsProps> = async ({}) => {
 
   return (
     <div>
-      <div className="mb-5 text-3xl font-semibold">Settings</div>
+      <div className="mb-5 text-3xl font-semibold">Settings Company Profile</div>
 
       <Tabs defaultValue="overview">
         <TabsList className="mb-8">
