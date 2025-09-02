@@ -28,7 +28,7 @@ const Applicants: FC<ApplicantsProps> = ({ applicants }) => {
                 <TableRow key={item.id + i}>
                   <TableCell>{item.user.name}</TableCell>
                   <TableCell>
-                    <ButtonActionTable url="" />
+                    <ButtonActionTable url="" description=""/>
                   </TableCell>
                 </TableRow>
               </>
