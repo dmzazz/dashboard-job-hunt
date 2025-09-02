@@ -5,6 +5,14 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { Dispatch, FC, SetStateAction } from "react";
 import { FaArrowLeftLong, FaArrowRight } from "react-icons/fa6";
 import { Button } from "../../button";
+import { IconType } from "react-icons/lib";
+import { useToast } from "@/hooks/use-toast";
+
+type SidebarType = {
+  label: string;
+  icon: IconType;
+  path: string;
+};
 
 interface SidebarProps {
   isOpen: boolean;
@@ -21,6 +29,8 @@ const Sidebar: FC<SidebarProps> = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
+
+  const { toast } = useToast();
 
   return (
     <div
@@ -39,7 +49,8 @@ const Sidebar: FC<SidebarProps> = ({
                   setIsOpen(!isOpen);
 
                   // If screen width < 640 then don't render sidebar
-                  if (window.innerWidth < 640) setIsSidebarVisible(!isSidebarVisible);
+                  if (window.innerWidth < 640)
+                    setIsSidebarVisible(!isSidebarVisible);
                 }}
               >
                 <FaArrowLeftLong className="cursor-pointer" />
@@ -57,12 +68,20 @@ const Sidebar: FC<SidebarProps> = ({
 
         {/* Main Menu */}
         <div className="space-y-3">
-          {MAIN_MENU.map((item, index) => (
+          {MAIN_MENU.map((item: SidebarType, index: number) => (
             <Button
               key={index}
               variant="ghost"
               className={`w-full justify-start rounded-none hover:text-blue-500 ${isOpen && "pl-7"} ${pathname === item.path && "bg-gray-300"}`}
-              onClick={() => item.path && router.push(item.path)}
+              onClick={() => {
+                item.path
+                  ? router.push(item.path)
+                  : toast({
+                      title: "Development",
+                      description:
+                        "The page you are trying to access is currently under development.",
+                    });
+              }}
             >
               <item.icon
                 className={`${isOpen ? "mr-2" : "w-full text-center"} text-lg`}

@@ -102,15 +102,15 @@ export const EMPLOYEE_OPTIONS: optionsType[] = [
 // Start menu navigation
 export const MAIN_MENU = [
   { label: "Home", icon: AiOutlineHome, path: "/" },
-  { label: "Messages", icon: AiOutlineMessage },
+  { label: "Messages", icon: AiOutlineMessage, path: "" },
   { label: "Company Profile", icon: BsBuildings, path: "/company-profile" },
-  { label: "All Applicants", icon: AiOutlineUsergroupAdd },
+  { label: "All Applicants", icon: AiOutlineUsergroupAdd, path: "" },
   {
     label: "Job Listings",
     icon: HiOutlineClipboardDocumentList,
     path: "/job-listings",
   },
-  { label: "My Schedule", icon: AiOutlineCalendar },
+  { label: "My Schedule", icon: AiOutlineCalendar, path: "" },
 ];
 
 export const SETTINGS_MENU = [
