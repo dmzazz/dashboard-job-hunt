@@ -1,16 +1,8 @@
-import React, { FC } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { JOB_LISTING_COLUMNS } from "@/constant";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Job } from "@prisma/client";
-import JobListingsTableRow from "../TableRow";
+import { FC } from "react";
 import JobListingsTableHeader from "../TableHeader";
+import JobListingsTableRow from "../TableRow";
 
 interface JobListingsTableProps {
   jobs: Job[];

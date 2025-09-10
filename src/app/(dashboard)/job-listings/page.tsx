@@ -1,29 +1,9 @@
 import { FC } from "react";
 
-import ButtonActionTable from "@/components/organisms/ButtonActionTable";
-import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { JOB_LISTING_COLUMNS } from "@/constant";
-import { dateFormat } from "@/lib/utils";
-import { Job } from "@prisma/client";
-import moment from "moment";
+import JobListingsTable from "@/components/organisms/JobListings/Table";
+import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import prisma from "../../../../lib/prisma";
-import { authOptions } from "@/lib/authOptions";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { MoreVerticalIcon } from "lucide-react";
-import JobListingsTable from "@/components/organisms/JobListings/Table";
 
 interface JobListingsPageProps {}
 

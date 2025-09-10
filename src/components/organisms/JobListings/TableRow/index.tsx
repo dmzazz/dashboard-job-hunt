@@ -1,21 +1,17 @@
-import React, { FC } from "react";
+import { FC } from "react";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import moment from "moment";
+import { Badge } from "@/components/ui/badge";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Badge } from "@/components/ui/badge";
+import {
+  TableCell,
+  TableRow
+} from "@/components/ui/table";
 import { MoreVerticalIcon } from "lucide-react";
+import moment from "moment";
 import ButtonActionTable from "../../ButtonActionTable";
 
 interface JobListingsTableCellProps {
