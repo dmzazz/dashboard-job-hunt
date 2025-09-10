@@ -23,6 +23,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { MoreVerticalIcon } from "lucide-react";
+import JobListingsTable from "@/components/organisms/JobListings/Table";
 
 interface JobListingsPageProps {}
 
@@ -31,84 +32,38 @@ export const revalidate = 0;
 async function getDataJobs() {
   const session = await getServerSession(authOptions);
 
-  const jobs = prisma.job.findMany({
+  if (!session?.user.id) {
+    throw new Error("Unauthorized");
+  }
+
+  const jobs = await prisma.job.findMany({
     where: {
       companyId: session?.user.id,
     },
   });
 
-  return jobs;
+  const totalJobs = await prisma.job.count({
+    where: {
+      companyId: session?.user.id,
+    },
+  });
+
+  return { data: { jobs, total_data: totalJobs } };
 }
 
 const JobListingsPage: FC<JobListingsPageProps> = async ({}) => {
-  const jobs = await getDataJobs();
+  const { data } = await getDataJobs();
 
   return (
     <div>
       <div className="text-3xl font-semibold">Job Listings</div>
 
-      <div className="mt-10">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {JOB_LISTING_COLUMNS.map((item: string, i: number) => (
-                <TableHead key={item + i}>{item}</TableHead>
-              ))}
-              <TableHead>Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {jobs.map((item: Job, i: number) => (
-              <TableRow key={item.roles + i}>
-                <TableCell>{item.roles}</TableCell>
-                <TableCell>
-                  {moment(item.datePosted).isBefore(item.dueDate) ? (
-                    <Badge>Live</Badge>
-                  ) : (
-                    <Badge variant="destructive">Expired</Badge>
-                  )}
-                </TableCell>
-                <TableCell>
-                  {moment(item.datePosted).format("Do MMMM yyyy")}
-                </TableCell>
-                <TableCell>
-                  {moment(item.dueDate).format("Do MMMM yyyy")}
-                </TableCell>
-                <TableCell>
-                  <Badge variant="outline">{item.jobType}</Badge>
-                </TableCell>
-                <TableCell>{item.applicants}</TableCell>
-                <TableCell>
-                  {item.applicants} / {item.needs}
-                </TableCell>
-                <TableCell>
-                  <Popover>
-                    <PopoverTrigger>
-                      <MoreVerticalIcon className="h-4 w-4 hover:cursor-pointer" />
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <div className="flex flex-col gap-4">
-                        <ButtonActionTable
-                          url={`/job-detail/${item.id}`}
-                          description="Detail"
-                        />
-                        <ButtonActionTable
-                          url={`/job-detail/${item.id}`}
-                          description="Update"
-                        />
-                        <ButtonActionTable
-                          url={`/job-detail/${item.id}`}
-                          description="Detail"
-                        />
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+      <div className="mb-2 mt-5">
+        Total Job Listings:{" "}
+        <span className="font-semibold">{data?.total_data || 0}</span>
       </div>
+
+      <JobListingsTable jobs={data.jobs} />
     </div>
   );
 };
