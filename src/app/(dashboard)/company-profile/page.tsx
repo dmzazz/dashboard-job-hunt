@@ -24,6 +24,8 @@ type CompanyProfile = {
 
 interface CompanyProfileProps {}
 
+export const revalidate = 0;
+
 async function getCompanyProfile() {
   try {
     // Get session
