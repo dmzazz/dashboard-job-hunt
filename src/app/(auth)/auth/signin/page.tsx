@@ -13,16 +13,19 @@ import { signInFormSchema } from "@/lib/form-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import Link from "next/link";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { AnimateLoading } from "@/components/ui/animate-loading";
 
 interface SignInPageProps {}
 
-const SignInPage: FC<SignInPageProps> = ({}) => {
+const SignInPage: FC<SignInPageProps> = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
   });
@@ -31,19 +34,33 @@ const SignInPage: FC<SignInPageProps> = ({}) => {
   const router = useRouter();
 
   const onSubmit = async (val: z.infer<typeof signInFormSchema>) => {
-    const authenticated = await signIn("credentials", {
-      ...val,
-      redirect: false,
-    });
-
-    if (authenticated?.error) {
-      toast({
-        title: "Error",
-        description: "Email or password maybe wrong",
+    setIsLoading(true);
+    try {
+      const authenticated = await signIn("credentials", {
+        ...val,
+        redirect: false,
       });
-      return;
+
+      // Check if email or password is wrong
+      if (authenticated?.error) {
+        toast({
+          title: "Error",
+          description: "Invalid email or password",
+        });
+        return;
+      }
+
+      // Navigate to dashboard
+      router.push("/");
+    } catch (error) {
+      toast({
+        title: "Unexpected Error",
+        description: "Something went wrong, please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
-    router.push("/");
   };
 
   return (
@@ -91,7 +108,15 @@ const SignInPage: FC<SignInPageProps> = ({}) => {
                 )}
               />
 
-              <Button className="w-full">Sign In</Button>
+              <Button type="submit" disabled={isLoading} className="w-full">
+                {isLoading ? (
+                  <>
+                    <AnimateLoading /> Signing in...
+                  </>
+                ) : (
+                  "Sign In"
+                )}
+              </Button>
 
               <div className="text-sm">
                 Don`t have an account{" "}
