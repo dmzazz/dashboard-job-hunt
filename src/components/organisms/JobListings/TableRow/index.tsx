@@ -6,10 +6,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  TableCell,
-  TableRow
-} from "@/components/ui/table";
+import { TableCell, TableRow } from "@/components/ui/table";
 import { MoreVerticalIcon } from "lucide-react";
 import moment from "moment";
 import ButtonActionTable from "../../ButtonActionTable";
@@ -64,14 +61,12 @@ const JobListingsTableRow: FC<JobListingsTableCellProps> = ({
               <ButtonActionTable
                 url={`/job-detail/${id}`}
                 description="Detail"
+                icon="detail"
               />
               <ButtonActionTable
                 url={`/job-detail/${id}`}
                 description="Update"
-              />
-              <ButtonActionTable
-                url={`/job-detail/${id}`}
-                description="Detail"
+                icon="update"
               />
             </div>
           </PopoverContent>
