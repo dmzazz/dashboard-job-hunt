@@ -22,14 +22,14 @@ export const JOBTYPES: EnumValues = [
   "Internship",
 ];
 
-export const JOB_LISTING_COLUMNS: string[] = [
-  "Roles",
-  "Status",
-  "Date Posted",
-  "Due Date",
-  "Job Type",
-  "Applicants",
-  "Needs",
+export const JOB_LISTING_COLUMNS = [
+  { key: "roles", label: "Roles" },
+  { key: "status", label: "Status" },
+  { key: "datePosted", label: "Date Posted" },
+  { key: "dueDate", label: "Due Date" },
+  { key: "jobType", label: "Job Type" },
+  { key: "applicants", label: "Applicants" },
+  { key: "needs", label: "Needs" },
 ];
 
 export const JOB_APPLICANT_COLUMNS: string[] = ["Name"];
