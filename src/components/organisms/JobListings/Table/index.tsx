@@ -6,13 +6,19 @@ import JobListingsTableRow from "../TableRow";
 
 interface JobListingsTableProps {
   jobs: Job[];
+  sortBy?: string;
+  orderBy?: "asc" | "desc";
 }
 
-const JobListingsTable: FC<JobListingsTableProps> = ({ jobs }) => {
+const JobListingsTable: FC<JobListingsTableProps> = ({
+  jobs,
+  sortBy,
+  orderBy,
+}) => {
   if (!jobs || jobs.length === 0) {
     return (
       <Table>
-        <JobListingsTableHeader />
+        <JobListingsTableHeader sortBy={sortBy} orderBy={orderBy} />
 
         <TableBody>
           <TableRow>
@@ -27,7 +33,7 @@ const JobListingsTable: FC<JobListingsTableProps> = ({ jobs }) => {
 
   return (
     <Table>
-      <JobListingsTableHeader />
+      <JobListingsTableHeader sortBy={sortBy} orderBy={orderBy} />
 
       <TableBody>
         {jobs.map((job, i) => (
